@@ -1,13 +1,10 @@
 name: Deploy to Cloudflare Pages
-
 on: [push]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
