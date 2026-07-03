@@ -11,10 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Build Project
-        run: |
-          npm install
-          npm run build
+      name: Deploy to Cloudflare Pages
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'carpets-rugs-royal-tavana-city-market'
+          directory: '.'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          
           
       - name: Deploy to Server (SSH)
         uses: appleboy/scp-action@master
