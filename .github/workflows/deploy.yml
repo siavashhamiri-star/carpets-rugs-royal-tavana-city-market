@@ -1,39 +1,24 @@
-name: Deploy to Server
+name: Deploy to Cloudflare Pages
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      name: Deploy to Cloudflare Pages
 on: [push]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Build
+        run: |
+          npm install
+          npm run build
+          
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'carpets-rugs-royal-tavana-city-market'
-          directory: '.'
+          directory: 'dist'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          
-          
-      - name: Deploy to Server (SSH)
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist/"
-          target: "/var/www/my-app"
           
