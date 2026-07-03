@@ -19,6 +19,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'carpets-rugs-royal-tavana-city-market'
-          directory: 'dist'
+          directory: '.'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
